@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fermino.data.vo.v1.BookVO;
 import br.com.fermino.services.BookService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value="Book Endpoint",description = "Description for book", tags={"BookEndpoint"})
 @RestController
 @RequestMapping("api/book/v1")
 public class BookController {
@@ -26,6 +29,7 @@ public class BookController {
 	@Autowired
 	private BookService service;
 	
+	@ApiOperation(value="Request to find all books recorded")
 	@GetMapping(produces = {"application/json","application/xml"})
 	public List<BookVO> findAll(){
 		List<BookVO> books = service.findAll();
@@ -35,6 +39,7 @@ public class BookController {
 		return books;
 	}
 	
+	@ApiOperation(value="Get book by id")
 	@GetMapping(value="/{id}",produces = {"application/json","application/xml"})
 	public BookVO findById(@PathVariable("id") Long id) {
 		BookVO book = service.findById(id);
@@ -44,6 +49,7 @@ public class BookController {
 		return book;
 	}
 	
+	@ApiOperation(value="Create a new book")
 	@PostMapping(produces = {"application/json","application/xml"},consumes = {"application/json","application/xml"})
 	public BookVO create(@RequestBody BookVO book) {
 		BookVO vo = service.create(book);
@@ -53,6 +59,7 @@ public class BookController {
 		return vo;
 	}
 	
+	@ApiOperation(value="Update a book")
 	@PutMapping(produces = {"application/json","application/xml"},consumes = {"application/json","application/xml"})
 	public BookVO update(@RequestBody BookVO book) {
 		BookVO vo = service.update(book);
@@ -62,6 +69,7 @@ public class BookController {
 		return vo;	
 	}
 	
+	@ApiOperation(value="delete a book")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		service.delete(id); 	

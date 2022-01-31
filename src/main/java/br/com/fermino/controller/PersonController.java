@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fermino.data.vo.v1.PersonVO;
 import br.com.fermino.services.PersonService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value="Person Endpoint",description = "Description for person", tags={"PersonEndpoint"})
 @RestController
 @RequestMapping("api/person/v1")
 public class PersonController {
@@ -25,6 +28,7 @@ public class PersonController {
 	@Autowired
 	private PersonService services;
 		
+	@ApiOperation(value="Request to find all people recorded")
 	@GetMapping(produces= {"application/json", "application/xml"})
     public List<PersonVO> findAll() {
 		List<PersonVO> persons= services.findAll();
@@ -33,7 +37,8 @@ public class PersonController {
     	
 		return persons;
     }
-	   
+	
+	@ApiOperation(value="Get person by id")
 	@GetMapping(value="/{id}",produces= {"application/json", "application/xml"})
     public PersonVO findById(@PathVariable("id")  Long id) {
     	PersonVO personVO= services.findById(id);
@@ -41,6 +46,7 @@ public class PersonController {
     	return personVO;
     }
     
+	@ApiOperation(value="Create a new person")
     @PostMapping(produces= {"application/json", "application/xml"},
     		consumes= {"application/json", "application/xml"})
     public PersonVO create(@RequestBody PersonVO person) {
@@ -50,7 +56,7 @@ public class PersonController {
     	
     }
     
-    
+	@ApiOperation(value="Update a person")
     @PutMapping(produces= {"application/json", "application/xml"},
     		consumes= {"application/json", "application/xml"})
     public PersonVO update(@RequestBody PersonVO person) {
@@ -59,6 +65,7 @@ public class PersonController {
     	return personVO;
     }
     
+	@ApiOperation(value="Delete a person")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
     	services.delete(id); 	

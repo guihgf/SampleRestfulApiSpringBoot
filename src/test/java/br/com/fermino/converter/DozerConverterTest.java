@@ -1,4 +1,4 @@
-package br.com.erudio.converter;
+package br.com.fermino.converter;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.erudio.converter.mocks.MockPerson;
 import br.com.fermino.adapter.DozerAdapter;
+import br.com.fermino.converter.mocks.MockPerson;
 import br.com.fermino.data.model.Person;
 import br.com.fermino.data.vo.v1.PersonVO;
 
