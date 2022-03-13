@@ -48,8 +48,10 @@ public class User implements UserDetails, Serializable {
 	@Column(name="credentials_non_expired")
 	private Boolean credentialsNonExpired;
 	
-	@Column(name="enabled")
+	@Column(name="enabled",nullable = false)
 	private Boolean enabled;
+	
+	
 	
 	@ManyToMany(fetch= FetchType.EAGER)
 	@JoinTable(name="user_permission",joinColumns = {@JoinColumn(name="id_user")},
@@ -189,4 +191,6 @@ public class User implements UserDetails, Serializable {
 				&& Objects.equals(id, other.id) && Objects.equals(password, other.password)
 				&& Objects.equals(permissions, other.permissions) && Objects.equals(userName, other.userName);
 	}
+
+	
 }

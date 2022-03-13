@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fermino.repository.UserRepository;
 import br.com.fermino.security.AccountCredentialsVO;
 import br.com.fermino.security.jwt.JwtTokenProvider;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+@Api(value="Auth Endpoint",description = "Description for book", tags={"Authentication Endpoint"})
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
