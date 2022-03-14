@@ -1,0 +1,20 @@
+language: base
+services: docker
+before_install:
+    - cd SampleRestfulApiSpringBoot
+    - echo "We are in the Docker Folder!"
+script:
+    - docker-compose build
+before_deploy:
+    - echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
+deploy:
+    provider: script
+    script:
+        docker push ghfermino/mysql-restful-api-spring-boot;
+        docker push ghfermino/restful-api-spring-boot;
+    on:
+        branch: master
+notifications:
+    email: false
+        
+    
