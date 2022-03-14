@@ -36,13 +36,16 @@ public class BookController {
 	@Autowired
 	private BookService service;
 	
+	@Autowired
+	PagedResourcesAssembler<BookVO> assembler;
+	
 	@ApiOperation(value="Request to find all books recorded")
 	@GetMapping(produces = {"application/json","application/xml"})
-	public ResponseEntity<PagedResources <BookVO>> findAll(
+	public ResponseEntity<?> findAll(
     		@RequestParam(value="page", defaultValue = "0") int page,
     		@RequestParam(value="limit", defaultValue = "12") int limit,
-    		@RequestParam(value="direction", defaultValue = "asc") String direction,
-    		PagedResourcesAssembler assembler){
+    		@RequestParam(value="direction", defaultValue = "asc") String direction
+    		){
 		
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
 		
@@ -52,7 +55,9 @@ public class BookController {
 		
 		books.stream().forEach(b->b.add(linkTo(methodOn(BookController.class).findById(b.getKey())).withSelfRel()));
 		
-		return new ResponseEntity<>(assembler.toResource(books),HttpStatus.OK);
+		PagedResources<?> resources = assembler.toResource(books);
+		
+		return new ResponseEntity<>(resources,HttpStatus.OK);
 	}
 	
 	@ApiOperation(value="Get book by id")
